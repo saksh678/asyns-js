@@ -1,0 +1,252 @@
+ Q1. Define XMLHttpRequest object, and How is it used in AJAX?
+ ANS. 
+      the Xmlhttprequest object is a built in javascript object that enable
+      communication with the web server without reloding web page. it allow sending http
+      request to the server.
+
+      properties and method.
+       some key properties are include in xhr object :-
+       1. initializes the request open(method,url,asyn).
+       2.send the request: send(data)
+       3. set request header : setRequestHeader(header,value)
+       4. retrieves respons header : getResponseHeader(header)
+       5. track the request status(0-4) : readyState
+       6. return http status code: status
+       7. return the respond as text: responseText   
+       8. return the respond as xml : resposeXML
+
+       AJAX( asynchronous javascript in XML):
+       ajax is a web development techinuqe to use xhr to update the web page, without
+       reloading the full page reload.
+
+       xhr in ajax uses:
+       // create xhr object:
+       var xhr = new xhrHttpRequest();
+      
+      //set request
+      xhr.open('Get','data.txt, true);
+
+      //send request
+      xhr.send();
+
+      //handle response 
+
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200 ){
+               console.log(xhr.responseText);
+               //update webpage content dynamically
+          }
+      };
+
+      this is the example of how xhr is use in ajax,
+
+
+
+      Q2. Write a JavaScript program to make an AJAX request using the 
+      XMLHttpRequest object to fetch data 
+from a remote API (https://jsonplaceholder.typicode.com/users)
+  and log a list of user names from the response to the browser console and output.
+
+ Expected browser output -  
+ans.
+
+
+
+
+
+
+Q3. What is the same-origin policy in the context of AJAX requests, and how 
+can you work around it?
+ans.  the same-origin policy is a security feature of the web browser that can 
+prevent malicious script for making unauthorized beheviour of the user.
+it restrict ajax request to communicated with the same origin(port,domain, protocol)
+of the web page.
+key aspects:
+1. domain: the domain of the request url must match with the domain of the web page.
+2. protocol: the protocol of the request(http/https) must match with the web page.
+3. port: the port number of the request url must match with the port number of the
+web page number.
+
+workaround:
+1. cors(cross-origin resource sharing): server can include specific header
+to allow cross origin request.
+
+-Access-Control-Allow-Origin: allow domain.
+-Access-Control-Allow-Method: allow method(Get,Post etc.)
+-Access-Control-Allow-Headers: allow header
+
+2.jsonp(json and padding): wrap json data in a script tag allowing the cross 
+origin request.
+
+-server wraps data in a callback function
+-client include script tag with callback function
+
+3.proxy server: acts as an intermediary between client and server
+
+- client make request to the proxy server
+- proxy server forward request to the target server
+
+4.postmessageAPI: allows communication between window and frames to the different 
+origin.
+
+5.server side proxy: server side code makes request on behalf of the client.
+
+example:- 
+
+Server-side(Node.js);
+
+res.header('Access-Control-Allow-Origin','*');
+res.header('Access-Control-Allow-Methods','GET,POST,OPTIONS');
+res.header('Access-Control-Allow-Headers','Content-Type');
+
+Client-side(Javascript):
+
+var xhr = new xhrHttpRequest();
+xhr.open('GET','(link unavailable)',true);
+xhr.open();
+
+
+Q4.Compare Promises to callbacks and discuss why Promises are preferred
+ for managing asynchronous code.
+
+ans. Callbacks:1. function passes argument to the other function.
+              2. excuted after the asynchronous code completed.
+              3. nested callbacks lead to the callbacks hells.
+ Promises: 1.represent to the outcome of asynchronous operation.
+           2. provide a clear and readable code to manage asynchronous code.
+
+ key difference.
+ 1. readability:- callbacks occour nested code and promise improde code readability
+avoding nested code.
+2.error handing:- promises provide a program or code to handle error like .catch()
+                  callbacks required manual error handling.
+3. composition: promises easliy composed using .then().
+4. cancellation: promise can cancel using .cancel() or .abort().
+
+why promises are preferred:
+1. simple code: promises reduce the compacity of asynchronous code to. making to easier
+understanding code.
+2. Better error handing: promise provide bulit in error like .catch().
+3. composability: promises improved composability of asynchronous code. and easily composed
+of using .then()
+
+exam.callback and promises
+
+callbacks:
+
+setTimeOut(() => {
+     console.log('step 1');
+     setTimeOut(() => {
+          console.log('step 2');
+       setTimeOut(() => {
+          console.log('step 3');
+       },2000);
+     },2000);
+},2000);
+
+promises:
+
+const step1 = () => Promise.resolve().then(() =>
+coonsole.log('step1'));
+
+const step2 = () => Promise.resolve().then(() =>
+coonsole.log('step2'));
+
+const step3 = () => Promise.resolve().then(() =>
+coonsole.log('step3'));
+
+step1().then(() => step2()).then(() => step3());
+
+ Q5. List and briefly explain some common Browser
+  APIs available to JavaScript developers.
+  ans. here are the some commom browser api avaiable to javascript developers:
+
+  1. DOM (document object model) api :-
+  . allow interaction with xml and html.
+  .create modifier,manipulated document structure.
+
+  2. Geolocation Api: 
+  .provide access to device's location
+  .enable location-based services.
+
+  3.Storage Api (Localstroage ,sessionStroage):
+  .store data locally within the browser
+  .persistent storage for web application.
+
+  4.canvas api.
+  .create dynamic graphic card images,
+  .2d drawing context of canvas element.
+
+  5.audio/video api:
+  .control audio and video playback.
+  .Enable custimization the media player.
+  
+  6.Featch Api:
+  .replace XMLHttpRequest for network request
+  .simplifies HTTP request and respond
+
+  7.clipbroad api:
+  .interact with system keyboard
+  .copies, paste and handle keyboard entities.
+
+ Q6.Describe the purpose and usage of the localStorage and sessionStorage APIs in web development. Give
+suitable examples for each.
+ans.
+
+the localStorage and sessionStorage API allow webdevdeloper to store data 
+with the user browser. both api provide a same way to store a data, but different in
+persistence and scope.
+
+localStorage api:
+Purpose:
+
+. store data persistently across browser sessions.
+.data remains even after browser restart.
+
+usage. 
+.store user preference , setting or game progress.
+.Cache frequently accessed resource.
+
+examples:
+
+//store data
+localStorage.setItem('username','johndeo');
+
+//retrive data
+const username = localStorage.getItem('username');
+console.log(username);
+
+//remove data
+localStorage.removeItem('username');
+
+//clear all data
+localStorage.clear();
+
+sessionStroage api:
+
+purpose:
+
+- Store data temporarily for the current browser session.
+- Data is deleted when the browser is closed.
+
+Usage:
+
+- Store temporary data, such as form inputs or shopping cart contents.
+- Implement "remember me" functionality.
+
+Example:
+
+// Store data
+sessionStorage.setItem('cartItems', JSON.stringify(['item1', 'item2']));
+
+// Retrieve data
+const cartItems = JSON.parse(sessionStorage.getItem('cartItems'));
+console.log(cartItems); // Output: ["item1", "item2"]
+
+// Remove data
+sessionStorage.removeItem('cartItems');
+
+// Clear all data
+sessionStorage.clear();
+
+
